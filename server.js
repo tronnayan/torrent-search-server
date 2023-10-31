@@ -1,7 +1,8 @@
-import express from 'express';
-import path from 'path';
-import getInfo from './torrentSearch.js';
-import WebTorrent from 'webtorrent';
+const express = require('express');
+const path = require('path');
+const getInfo = require('./torrentSearch.js');
+const WebTorrent = require('webtorrent');
+
 
 const app = express();
 const port = 3000;
