@@ -1,6 +1,6 @@
 const express = require('express');
 const getInfo = require('./torrentSearch.js');
-const WebTorrent = require('webtorrent');
+import WebTorrent from 'webtorrent';
 
 
 const app = express();
