@@ -1,4 +1,4 @@
-const TorrentSearchApi = require('torrent-search-api';)
+const TorrentSearchApi = require('torrent-search-api');
 const providers = ["ThePirateBay"];
 
 for (const provider of providers) {
