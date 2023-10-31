@@ -17,8 +17,8 @@ async function getInfo(query, limit = 20) {
         return { success: false, query, error: "No results found" };
       }
       const popularTorrents = torrents.filter(torrent => torrent.seeds > 5);
-      const sortedTorrents = popularTorrents.sort((a, b) => b.seeds - a.seeds);
-      return { success: true, query, sortedTorrents };
+      // const sortedTorrents = popularTorrents.sort((a, b) => b.seeds - a.seeds);
+      return { success: true, query, popularTorrents };
     })
     .catch((error) => {
       console.error("Torrent search failed:", error);
