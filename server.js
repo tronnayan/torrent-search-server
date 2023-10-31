@@ -1,7 +1,7 @@
-const express = require('express');
-const getInfo = require('./torrentSearch.js');
+import express from 'express';
+import path from 'path';
+import getInfo from './torrentSearch.js';
 import WebTorrent from 'webtorrent';
-
 
 const app = express();
 const port = 3000;
@@ -9,6 +9,10 @@ const client = new WebTorrent();
 
 // Middleware to parse JSON requests
 app.use(express.json());
+
+// Serve static files from the 'public' directory
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+app.use(express.static(__dirname));
 
 function streamTorrent(torrent, res) {
   console.log('streamTorrent - waiting to start stream');

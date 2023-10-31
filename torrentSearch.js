@@ -1,4 +1,4 @@
-const TorrentSearchApi = require('torrent-search-api');
+import TorrentSearchApi from 'torrent-search-api';
 const providers = ["ThePirateBay"];
 
 for (const provider of providers) {
@@ -24,4 +24,5 @@ async function getInfo(query, limit = 20) {
       return { success: false, query, error: "Search failed" };
     });
 }
-module.exports = getInfo;
+export default getInfo;
+
