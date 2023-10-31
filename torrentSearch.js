@@ -24,5 +24,4 @@ async function getInfo(query, limit = 20) {
       return { success: false, query, error: "Search failed" };
     });
 }
-export default getInfo;
-
+module.exports = getInfo;
