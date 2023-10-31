@@ -1,12 +1,18 @@
 import express from 'express';
-import getInfo from './torrentSearch.js'; // Make sure to use the correct relative path
+import path from 'path';
+import getInfo from './torrentSearch.js';
+import WebTorrent from 'webtorrent';
 
 const app = express();
 const port = 3000;
-import WebTorrent from 'webtorrent';
 const client = new WebTorrent();
 
+// Middleware to parse JSON requests
 app.use(express.json());
+
+// Serve static files from the 'public' directory
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+app.use(express.static(__dirname));
 
 function streamTorrent(torrent, res) {
   console.log(`streamTorrent - waiting to start stream`)
@@ -29,6 +35,30 @@ function streamTorrent(torrent, res) {
   });
 }
 
+
+
+app.get('/search', async (req, res) => {
+  console.log("inside search");
+  const query = req.query.q;
+  if (!query) {
+    return res.status(400).json({ error: 'Query parameter "q" is required' });
+  }
+
+  const limit = parseInt(req.query.limit) || 20;
+  try {
+    const results = await getInfo(query, limit);
+    if (!results.success) {
+      return res.status(404).json({ error: 'No results found' });
+    }
+    res.json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
 
 // app.get('/search', async (req, res) => {
 //   console.log("Inside search");
@@ -65,28 +95,3 @@ function streamTorrent(torrent, res) {
 //     res.status(500).json({ error: 'Internal server error' });
 //   }
 // });
-
-
-app.get('/search', async (req, res) => {
-  console.log("inside search");
-  const query = req.query.q;
-  if (!query) {
-    return res.status(400).json({ error: 'Query parameter "q" is required' });
-  }
-
-  const limit = parseInt(req.query.limit) || 20;
-  try {
-    const results = await getInfo(query, limit);
-    if (!results.success) {
-      return res.status(404).json({ error: 'No results found' });
-    }
-    res.json(results);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
-

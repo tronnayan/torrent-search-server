@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torrent Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-blue-400 to-teal-500 text-white min-h-screen">
+
+    <div class="container mx-auto p-6">
+        <h1 class="text-center text-4xl font-bold mt-20 mb-6">Torrent Search</h1>
+
+        <form action="/search" method="get" class="flex justify-center items-center">
+            <input type="text" name="q" placeholder="Search..." class="p-2 rounded-l-md focus:outline-none focus:ring">
+            <button type="submit" class="p-2 bg-white text-black rounded-r-md">Search</button>
+        </form>
+
+        <div id="results" class="mt-8">
+            <!-- The search results will go here -->
+        </div>
+    </div>
+
+    <script>
+        // Assuming you fetch the data and it's stored in a variable called 'data'
+        const data = { /*... your data ...*/ };
+        const resultsContainer = document.getElementById('results');
+
+        data.sortedTorrents.forEach(torrent => {
+            const torrentDiv = document.createElement('div');
+            torrentDiv.classList.add('border', 'p-4', 'my-4', 'rounded-md', 'bg-opacity-50', 'bg-white');
+
+            const title = document.createElement('div');
+            title.classList.add('text-xl', 'font-bold');
+            title.textContent = torrent.title;
+
+            const size = document.createElement('div');
+            size.classList.add('mt-2');
+            size.textContent = `Size: ${torrent.size}`;
+
+            const seeds = document.createElement('div');
+            seeds.classList.add('mt-2');
+            seeds.textContent = `Seeds: ${torrent.seeds}`;
+
+            // ... You can continue this for other torrent details ...
+
+            torrentDiv.appendChild(title);
+            torrentDiv.appendChild(size);
+            torrentDiv.appendChild(seeds);
+
+            resultsContainer.appendChild(torrentDiv);
+        });
+    </script>
+</body>
+
+</html>
